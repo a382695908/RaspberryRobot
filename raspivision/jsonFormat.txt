@@ -1,0 +1,23 @@
+//
+//  Json Format
+//
+//  Created by Wang Han.SCU on 6/6/16.
+//  Copyright © 2016 robotcloud. SCU. All rights reserved.
+//
+
+
+//speed -255~255
+//dirction command
+{
+    "LeftWheelSpeed":255,
+    "RightWheelSpeed":255
+}
+
+//image command
+{
+    "BRIGHTNESS":"value",
+    "CONTRAST":"value",
+    "SATURATION":"value",
+    "WIDTH":"value",
+    "HEIGHT":"value"
+}

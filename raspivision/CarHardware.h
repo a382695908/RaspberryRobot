@@ -1,19 +1,17 @@
-#include <csignal>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <errno.h>
-#include <signal.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dlfcn.h>
-#include <fcntl.h>
+//
+//  CarHardware.h
+//  dachuang_car_xcode
+//
+//  Created by 黄正跃 on 5/12/16.
+//  Copyright © 2016 黄正跃. All rights reserved.
+//
+
+#ifndef CarHardware_h
+#define CarHardware_h
+#include <stdexcept>
+#include <exception>
 #include <iostream>
-#include "RaspiVision.h"
-#include "StreamOutputer.h"
-#include "CarHardware.h"
-#include "dist/json/json.h"
+#include <wiringPi.h>
 
 /*
  树莓派2引脚定义如下
@@ -46,32 +44,53 @@
  +-----+-----+---------+------+---+---Pi 2---+---+------+---------+-----+-----+
  
  */
-void StopSignalHandler(int sig){
-	//Release all resource
-	rv::RaspiVision::Release();
-}
 
-int main(int argc, char* argv[]){
-
-	int MOTOR_LEFT_1=8;
-    int MOTOR_LEFT_2=9;
-    int MOTOR_RIGHT_1=7;
-    int MOTOR_RIGHT_2=0;
-    //will use in later version
+class CarHardware{
+private:
+    //motor pins (connect to L298N)
+    int MOTOR_LEFT_1;
+    int MOTOR_LEFT_2;
+    int MOTOR_RIGHT_1;
+    int MOTOR_RIGHT_2;
     int MOTOR_PWM_1;
     int MOTOR_PWM_2;
+    
+    //single instance
+    static CarHardware* car;
+    //private constructor
+    CarHardware(int motor_left_1,int motor_left_2,int motor_right_1,int motor_right_2)
+    :MOTOR_LEFT_1(motor_left_1),
+    MOTOR_LEFT_2(motor_left_2),
+    MOTOR_RIGHT_1(motor_right_1),
+    MOTOR_RIGHT_2(motor_right_2){
+        wiringPiSetup();//initial all
+        pinMode(MOTOR_LEFT_1, OUTPUT);
+        pinMode(MOTOR_LEFT_2, OUTPUT);
+        pinMode(MOTOR_RIGHT_1, OUTPUT);
+        pinMode(MOTOR_RIGHT_2, OUTPUT);
+        
+    }
+public:
+    static CarHardware* create(int motor_left_1,int motor_left_2,int motor_right_1,int motor_right_2){
+        if(nullptr==car){
+            car=new CarHardware(motor_left_1,motor_left_2,motor_right_1,motor_right_2);
+        }
+        return car;
+    }
+    static CarHardware* getInstance(){
+        //instance must be created before getInstance()
+        if(nullptr==car){
+            throw std::runtime_error("CarHardware not created!");
+        }
+        return car;
+    }
+    
+    void goForward(double speed);
+    void goBackward(double speed);
+    void turnLeft(double speed);
+    void turnRight(double speed);
+    void stop();
+    
+};
 
-	//Ignore SIGPIPE (send by OS if transmitting to closed TCP sockets)
-	//Don't ask me why. I don't know, either.
-	std::signal(SIGPIPE, SIG_IGN);
-	//Set handler for interupt signal
-	std::signal(SIGINT, StopSignalHandler);
-
-	CarHardware* carHarware=CarHardware::create(MOTOR_LEFT_1,MOTOR_LEFT_2,MOTOR_RIGHT_1,MOTOR_RIGHT_2);
-    StreamOutputer* streamOutputer=StreamOutputer::getInstance();
-	rv::RaspiVision& rsv = rv::RaspiVision::GetInstance();
-
-	pause();
-	
-	return 0;
-}
+#endif /* CarHardware_h */

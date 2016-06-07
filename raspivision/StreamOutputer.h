@@ -2,13 +2,16 @@
 //  StreamOutputer.h
 //  raspivision
 //
-//  Created by 黄正跃 on 5/1/16.
-//  Copyright © 2016 黄正跃. All rights reserved.
+//  Created by Wang Han.SCU on 6/6/16.
+//  Copyright © 2016 robotcloud. SCU. All rights reserved.
 //
 
 #ifndef StreamOutputer_h
 #define StreamOutputer_h
 #include "RaspiVision.h"
+#include "CarHardware.h"
+#include "dist/json/json.h"
+
 #include <thread>
 #include <vector>
 #include <arpa/inet.h>
@@ -17,6 +20,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <iostream>
+
 
 #define IO_BUFFER 256
 #define BUFFER_SIZE 1024
@@ -56,38 +60,43 @@ typedef struct {
 class StreamOutputer{
 private:
     rv::RaspiVision* raspivision;
-    
+
     int port=8080;
-    
+
     StreamOutputer();
-    
+
     std::thread* serverThread;
-    
+
     std::vector<std::thread*> clientThreads;
-    
+
     static void run(StreamOutputer* that);
-    
+
     static void runClient(StreamOutputer* that,int fd);
-    
+
+	void deal_dirctionCommand(int fd,char* parameter);
+
+    void deal_ImageCommand(int fd,char* parameter);
+
+    void send_stream(int fd);
+
     void init_iobuffer(iobuffer *iobuf);
-    
+
     void init_request(request *req);
-    
+
     void free_request(request *req);
-    
+
     template<typename T>
     int _read(int fd, iobuffer *iobuf, T *buffer, size_t len, int timeout);
-    
+
     int _readline(int fd, iobuffer *iobuf, void *buffer, size_t len, int timeout);
-    
-    void send_stream(int fd);
-    
-    
+
+
+
 public:
-    
+
     static StreamOutputer* getInstance();
-    
-    
+
+
 };
 
 #endif /* StreamOutputer_h */

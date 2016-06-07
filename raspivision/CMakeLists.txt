@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
 project (raspivision)
+set(raspicam_DIR /home/pi/raspicam-0.1.3/build)
 find_package(raspicam REQUIRED)
 find_package(OpenCV)
 FIND_PACKAGE(OpenMP)
@@ -19,15 +20,18 @@ INCLUDE_DIRECTORIES()
 SET(SRC_LIST main.cpp
         StreamOutputer.cpp
         RaspiVision.cpp
+        CarHardware.cpp
         Controler.cpp
 		ImageProcess.cpp
+		dist/jsoncpp.cpp
         )
 
 ADD_EXECUTABLE(raspivision ${SRC_LIST})
 INCLUDE_DIRECTORIES(${raspicam_CV_INCLUDE_DIRS})
 target_link_libraries (raspivision pthread)
+target_link_libraries (raspivision wiringPi)
+target_link_libraries (raspivision jsoncpp)
 target_link_libraries (raspivision ${raspicam_CV_LIBS})
 ELSE()
 MESSAGE(FATAL_ERROR "OPENCV NOT FOUND IN YOUR SYSTEM")
 ENDIF()
-
