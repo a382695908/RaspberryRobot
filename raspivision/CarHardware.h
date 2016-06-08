@@ -12,7 +12,7 @@
 #include <exception>
 #include <iostream>
 #include <wiringPi.h>
-
+#include <softPwm.h>
 /*
  树莓派2引脚定义如下
  
@@ -52,22 +52,20 @@ private:
     int MOTOR_LEFT_2;
     int MOTOR_RIGHT_1;
     int MOTOR_RIGHT_2;
-    int MOTOR_PWM_1;
-    int MOTOR_PWM_2;
-    
     //single instance
     static CarHardware* car;
     //private constructor
     CarHardware(int motor_left_1,int motor_left_2,int motor_right_1,int motor_right_2)
-    :MOTOR_LEFT_1(motor_left_1),
+    :
+    MOTOR_LEFT_1(motor_left_1),
     MOTOR_LEFT_2(motor_left_2),
     MOTOR_RIGHT_1(motor_right_1),
     MOTOR_RIGHT_2(motor_right_2){
         wiringPiSetup();//initial all
-        pinMode(MOTOR_LEFT_1, OUTPUT);
-        pinMode(MOTOR_LEFT_2, OUTPUT);
-        pinMode(MOTOR_RIGHT_1, OUTPUT);
-        pinMode(MOTOR_RIGHT_2, OUTPUT);
+        softPwmCreate (MOTOR_LEFT_1, 0, 1024);
+        softPwmCreate (MOTOR_LEFT_2, 0, 1024);
+        softPwmCreate (MOTOR_RIGHT_1, 0, 1024);
+        softPwmCreate (MOTOR_RIGHT_2, 0, 1024);
         
     }
 public:
@@ -85,6 +83,8 @@ public:
         return car;
     }
     
+    
+    void run(int left,int right);
     void goForward(double speed);
     void goBackward(double speed);
     void turnLeft(double speed);

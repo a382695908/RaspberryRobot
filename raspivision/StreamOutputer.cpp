@@ -174,6 +174,8 @@ void StreamOutputer::runClient(StreamOutputer* that,int fd){
 *
 *****************************/
 void StreamOutputer::deal_dirctionCommand(int fd, char* parameter){
+    int leftWheelSpeed;
+    int rightWheelSpeed;
     //debug
     log_<<"client "<<fd<<" deal_dirctionCommand\n";
 
@@ -181,17 +183,14 @@ void StreamOutputer::deal_dirctionCommand(int fd, char* parameter){
     Json::Value root;
     if(reader.parse(parameter,root))
     {
-        int leftWheelSpeed = root["LeftWheelSpeed"].asInt();
-        int rightWheelSpeed = root["RightWheelSpeed"].asInt();
+        leftWheelSpeed = root["LeftWheelSpeed"].asInt();
+        rightWheelSpeed = root["RightWheelSpeed"].asInt();
     }
 
     CarHardware* car=CarHardware::getInstance();
-    /*
-    *
-    *
-    *未完成
-    *
-    */
+    
+    car->run(left,right);
+    
     char buf[256]={0};
     sprintf(buf, "HTTP/1.0 200 OK\r\n" \
                   "Content-type: text/plain\r\n" \
