@@ -20,7 +20,6 @@ INCLUDE_DIRECTORIES()
 SET(SRC_LIST main.cpp
         StreamOutputer.cpp
         RaspiVision.cpp
-        CarHardware.cpp
         Controler.cpp
 		ImageProcess.cpp
 		dist/jsoncpp.cpp
@@ -29,7 +28,6 @@ SET(SRC_LIST main.cpp
 ADD_EXECUTABLE(raspivision ${SRC_LIST})
 INCLUDE_DIRECTORIES(${raspicam_CV_INCLUDE_DIRS})
 target_link_libraries (raspivision pthread)
-target_link_libraries (raspivision wiringPi)
 target_link_libraries (raspivision jsoncpp)
 target_link_libraries (raspivision ${raspicam_CV_LIBS})
 ELSE()

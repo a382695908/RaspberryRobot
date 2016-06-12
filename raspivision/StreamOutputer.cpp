@@ -90,7 +90,7 @@ void StreamOutputer::run(StreamOutputer* that){
 
 void StreamOutputer::runClient(StreamOutputer* that,int fd){
 
-    log_<<"cleint run on "<<fd<<std::endl;
+    log_<<"client run on "<<fd<<std::endl;
     int cnt;
     char buffer[BUFFER_SIZE]={0}, *pb=buffer;
     iobuffer iobuf;
@@ -114,39 +114,97 @@ void StreamOutputer::runClient(StreamOutputer* that,int fd){
 		close(fd);
     }
 	else if((pb = strstr(buffer, "GET /?action=directionCommand")) !=NULL){
-        /*size of command*/
+        //size of command
 		pb += strlen("GET /?action=directionCommand");
         int len=0;
         while(pb[len]!=' '){
             ++len;
         }
 
-		/*get the command*/
+		//get the command
         char *parameter=new char[len+2];
         strncpy(parameter,pb,len);
 		parameter[len]='\0';
+        //deubg
+        //std::cout<<"old parameter: "<<parameter<<"\n";
 
-		/*determine what to deal with  command*/
-        that->deal_dirctionCommand(fd,parameter);
+        std::string mParameter = parameter;
+        std::string old_value="%22";
+        std::string new_value="\"";
 
+        for(std::string::size_type pos(0); pos!=std::string::npos; pos+=new_value.length())   {
+            if( (pos=mParameter.find(old_value,pos))!=std::string::npos )
+                mParameter.replace(pos,old_value.length(),new_value);
+            else
+                break;
+       }
+
+       old_value="&";
+       new_value="";
+       for(std::string::size_type pos(0);   pos!=std::string::npos;   pos+=new_value.length())   {
+           if(   (pos=mParameter.find(old_value,pos))!=std::string::npos   )
+              mParameter.replace(pos,old_value.length(),new_value);
+           else
+              break;
+       }
+        //deubg
+        std::cout<<"new parameter: "<<mParameter<<"\n";
+
+        //determine what to deal with  command
+        that->deal_dirctionCommand(fd,mParameter.c_str());
+
+        //debug
+        //std::cout<<"deal successful!"<<std::endl;
         delete[] parameter;
+        //debug
+        //std::cout<<"delete successful!"<<std::endl;
         close(fd);
+        //debug
+        //std::cout<<"close successful!"<<std::endl;
     }
+
     else if((pb = strstr(buffer, "GET /?action=imageCommand")) !=NULL){
-		/*size of command*/
+        /*size of command*/
 		pb += strlen("GET /?action=imageCommand");
         int len=0;
         while(pb[len]!=' '){
             ++len;
         }
+        //debug
+        //log_<<"len: "<<len<<"\n";
 
 		/*get the command*/
         char *parameter=new char[len+2];
         strncpy(parameter,pb,len);
 		parameter[len]='\0';
+        //deubg
+        //std::cout<<"old parameter: "<<parameter<<"\n";
+
+        std::string mParameter = parameter;
+	    std::string old_value="%22";
+	    std::string new_value="\"";
+
+	    for(std::string::size_type   pos(0);   pos!=std::string::npos;   pos+=new_value.length())   {
+		    if( (pos=mParameter.find(old_value,pos))!=std::string::npos   )
+			    mParameter.replace(pos,old_value.length(),new_value);
+		    else
+                break;
+	   }
+
+	    old_value="&";
+	    new_value="";
+	    for(std::string::size_type   pos(0);   pos!=std::string::npos;   pos+=new_value.length())   {
+		    if(   (pos=mParameter.find(old_value,pos))!=std::string::npos   )
+			   mParameter.replace(pos,old_value.length(),new_value);
+		    else
+			   break;
+	    }
+
+        //deubg
+        std::cout<<"new parameter: "<<mParameter<<"\n";
 
 		/*determine what to deal with  command*/
-        that->deal_ImageCommand(fd,parameter);
+        that->deal_ImageCommand(fd,mParameter.c_str());
 
         delete[] parameter;
         close(fd);
@@ -155,6 +213,7 @@ void StreamOutputer::runClient(StreamOutputer* that,int fd){
         std::cerr<<"wrong parameter!\n";
 
 		char buf[256]={0};
+        buf[255]='\0';
         sprintf(buf, "HTTP/1.0 200 OK\r\n" \
                   "Content-type: text/plain\r\n" \
                   STD_HEADER \
@@ -173,19 +232,28 @@ void StreamOutputer::runClient(StreamOutputer* that,int fd){
 *	deal with dirction command
 *
 *****************************/
-void StreamOutputer::deal_dirctionCommand(int fd, char* parameter){
+void StreamOutputer::deal_dirctionCommand(int fd, const char* parameter){
     //debug
     log_<<"client "<<fd<<" deal_dirctionCommand\n";
 
     Json::Reader reader;
     Json::Value root;
+
+	int leftWheelSpeed = 0;
+	int rightWheelSpeed = 0;
+
+
     if(reader.parse(parameter,root))
     {
-        int leftWheelSpeed = root["LeftWheelSpeed"].asInt();
-        int rightWheelSpeed = root["RightWheelSpeed"].asInt();
+        leftWheelSpeed = root["LeftWheelSpeed"].asInt();
+        rightWheelSpeed = root["RightWheelSpeed"].asInt();
     }
 
-    CarHardware* car=CarHardware::getInstance();
+	//debug
+	log_<<"leftWheelSpeed: "<<leftWheelSpeed<<"\n";
+    log_<<"rightWheelSpeed: "<<rightWheelSpeed<<"\n";
+
+    //CarHardware* car=CarHardware::getInstance();
     /*
     *
     *
@@ -193,11 +261,17 @@ void StreamOutputer::deal_dirctionCommand(int fd, char* parameter){
     *
     */
     char buf[256]={0};
+    buf[255]='\0';
     sprintf(buf, "HTTP/1.0 200 OK\r\n" \
-                  "Content-type: text/plain\r\n" \
-                  STD_HEADER \
-                  "\r\n%s","direction command");
-    write(fd, buf, strlen(buf));
+              "Content-type: text/plain\r\n" \
+              STD_HEADER \
+              "\r\n","direction parameter changed!\n");
+    if(write(fd, buf, strlen(buf))<0){
+        std::cerr<<"wrong to send direction info!\n";
+    }
+
+    //debug
+    log_<<"write  successful!\n";
 }
 
 
@@ -205,7 +279,7 @@ void StreamOutputer::deal_dirctionCommand(int fd, char* parameter){
 *	deal with image command
 *
 *****************************/
-void StreamOutputer::deal_ImageCommand(int fd, char* parameter){
+void StreamOutputer::deal_ImageCommand(int fd, const char* parameter){
     //debug
     log_<<"client "<<fd<<" deal_ImageCommand\n";
 
@@ -225,7 +299,15 @@ void StreamOutputer::deal_ImageCommand(int fd, char* parameter){
         mSaturation = root["SATURATION"].asInt();
         mWidth = root["WIDTH"].asInt();
         mHeight = root["HEIGHT"].asInt();
+
     }
+
+	//debug
+	std::cout<<"brightness: "<<mBrightness <<std::endl;
+	std::cout<<"contrast: "<<mContrast <<std::endl;
+	std::cout<<"saturation: "<<mSaturation <<std::endl;
+	std::cout<<"width: "<<mWidth <<std::endl;
+	std::cout<<"height: "<<mHeight <<std::endl;
 
     rv::RaspiVision& raspi = rv::RaspiVision::GetInstance();
 
@@ -238,13 +320,19 @@ void StreamOutputer::deal_ImageCommand(int fd, char* parameter){
     if (raspi.getImageWidth() !=mWidth || raspi.getImageHeight() !=mHeight)
         raspi.setImageSize(mHeight,mWidth);
 
-    char *response = "Image parameter changed!";
+
     char buf[256]={0};
+    buf[255]='\0';
     sprintf(buf, "HTTP/1.0 200 OK\r\n" \
-                  "Content-type: text/plain\r\n" \
-                  STD_HEADER \
-                  "\r\n%s",response);
-    write(fd, buf, strlen(buf));
+              "Content-type: text/plain\r\n" \
+              STD_HEADER \
+              "\r\n","image parameter changed!\n");
+    if(write(fd, buf, strlen(buf))<0){
+        std::cerr<<"wrong to send image info!\n";
+    }
+
+    //debug
+    log_<<"write successful!\n";
 }
 
 /************************************

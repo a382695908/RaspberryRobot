@@ -6,11 +6,8 @@
 //  Copyright © 2016 robotcloud. SCU. All rights reserved.
 //
 
-#ifndef StreamOutputer_h
-#define StreamOutputer_h
-#include "RaspiVision.h"
-#include "CarHardware.h"
-#include "dist/json/json.h"
+#ifndef _STREAMOUTPUTER_H_
+#define _STREAMOUTPUTER_H_
 
 #include <thread>
 #include <vector>
@@ -19,8 +16,11 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
+#include <string>
 #include <iostream>
 
+#include "RaspiVision.h"
+#include "dist/json/json.h"
 
 #define IO_BUFFER 256
 #define BUFFER_SIZE 1024
@@ -73,9 +73,9 @@ private:
 
     static void runClient(StreamOutputer* that,int fd);
 
-	void deal_dirctionCommand(int fd,char* parameter);
+	void deal_dirctionCommand(int fd,const char* parameter);
 
-    void deal_ImageCommand(int fd,char* parameter);
+    void deal_ImageCommand(int fd,const char* parameter);
 
     void send_stream(int fd);
 
@@ -90,8 +90,6 @@ private:
 
     int _readline(int fd, iobuffer *iobuf, void *buffer, size_t len, int timeout);
 
-
-
 public:
 
     static StreamOutputer* getInstance();
@@ -99,4 +97,4 @@ public:
 
 };
 
-#endif /* StreamOutputer_h */
+#endif /* _STREAMOUTPUTER_H_ */
