@@ -15,9 +15,9 @@
 
 //image command
 {
-    "BRIGHTNESS":"value",
-    "CONTRAST":"value",
-    "SATURATION":"value",
-    "WIDTH":"value",
-    "HEIGHT":"value"
+    "BRIGHTNESS":value,
+    "CONTRAST":value,
+    "SATURATION":value,
+    "WIDTH":value,
+    "HEIGHT":value
 }
