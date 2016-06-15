@@ -1,4 +1,4 @@
-var url = "http://192.168.31.179:8080/?action=directionCommand";
+var url = "http://192.168.31.205:8080/?action=directionCommand";
 
 $(document).ready(function() {
     "use strict";
@@ -32,6 +32,15 @@ $(document).ready(function() {
     $("#right").click(function() {
         var direction = new Object();
         direction.LeftWheelSpeed = 100;
+        direction.RightWheelSpeed = 0;
+
+        var directionJson = JSON.stringify(direction);
+        $.get(url,directionJson);
+    });
+    
+    $("#stop").click(function() {
+        var direction = new Object();
+        direction.LeftWheelSpeed = 0;
         direction.RightWheelSpeed = 0;
 
         var directionJson = JSON.stringify(direction);

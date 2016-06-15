@@ -1,4 +1,4 @@
-var url = "http://192.168.31.179:8080/?action=imageCommand";
+var url = "http://192.168.31.205:8080/?action=imageCommand";
 
 $(document).ready(function() {
     "use strict";
