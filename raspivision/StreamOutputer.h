@@ -3,7 +3,7 @@
 //  raspivision
 //
 //  Created by Wang Han.SCU on 6/6/16.
-//  Copyright © 2016 robotcloud. SCU. All rights reserved.
+//  Copyright (C) 2016 robotcloud. SCU. All rights reserved.
 //
 
 #ifndef _STREAMOUTPUTER_H_

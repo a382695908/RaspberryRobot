@@ -260,6 +260,7 @@ void StreamOutputer::deal_dirctionCommand(int fd, const char* parameter){
     *未完成
     *
     */
+    
     char buf[256]={0};
     buf[255]='\0';
     sprintf(buf, "HTTP/1.0 200 OK\r\n" \

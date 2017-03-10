@@ -1,3 +1,12 @@
+//
+//  main.cpp
+//  dachuang_car_xcode
+//
+//  Created by 黄正跃 on 5/12/16.
+//  Copyright © 2016 黄正跃. All rights reserved.
+//
+
+
 #include <csignal>
 #include <unistd.h>
 #include <sys/ioctl.h>
