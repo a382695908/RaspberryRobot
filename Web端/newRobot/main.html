@@ -1,0 +1,143 @@
+<!DOCTYPE hrml>
+<html class="colorfulBack">
+    <head>
+        <meta charset="UTF-8" content="width=device-width,user-scalable=yes"/>
+        <title>Raspberry Pi Car</title>
+        <script  src="js/jquery-2.1.4.min.js"></script>
+        <script  src="js/mainpage.js"></script>
+        <script  src="js/jquery-2.1.4.min.js"></script>
+        <link rel="stylesheet" href="css/MainStyle.css"/>
+
+
+    </head>
+
+
+    <body>
+
+        <!--<div class="titleBarBlank">
+        </div>
+        <div class="titleBar">
+            <p class="logo">Raspberry Car</p>
+        </div>-->
+        <div class="mainconainer">
+            <div class="leftNavigator">
+
+                <div class="leftHeader">
+                    <div class="personal_info">
+                        <img class="circlePicture" src="images/test.jpg"/>
+                        <span>R_Developer</span>
+                        <img id="menu" class="menu_icon" src="images/menu.png"/>
+                    </div>
+                    <div class="search">
+                        <input  class="search" type="text"/>
+                    </div>
+                    <div class="selector">
+                        <a id="rasp_button" title="查看小车">
+                            <img src="images/raspberry.png"/>
+                        </a>
+                        <a id="friend_button" title="朋友">
+                            <img src="images/friend.png"/>
+                        </a>
+                        <a id="add_button" title="添加">
+                            <img src="images/add.png"/>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="cars">
+                    <!--<div class="whiteColor leftFont blockItem onMouseWhite">DashBorad</div>
+                    <div class="whiteColor leftFont blockItem onMouseWhite">Friends</div>
+                    <div class="whiteColor leftFont blockItem onMouseWhite">Configuration</div>-->
+                    <div class="car_item">
+                        <div class="circle colorBlock1"></div>
+                        <span>RPI_001 </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="car_item">
+                        <div class="circle colorBlock2"></div>
+                        <span>RPI_002 </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="car_item">
+                        <div class="circle colorBlock3"></div>
+                        <span>RPI_003 </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="car_item">
+                        <div class="circle colorBlock4"></div>
+                        <span>RPI_004 </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="car_item">
+                        <div class="circle colorBlock5"></div>
+                        <span>RPI_005 </span><span class="online">(在线)</span>
+                    </div>
+                </div>
+
+                <div id="friends">
+                    <div class="friend_item">
+                        <div class="circle colorBlock1"></div>
+                        <span>Tom </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="friend_item">
+                        <div class="circle colorBlock2"></div>
+                        <span>Jim </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="friend_item">
+                        <div class="circle colorBlock3"></div>
+                        <span>Bob </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="friend_item">
+                        <div class="circle colorBlock4"></div>
+                        <span>Einstein </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="friend_item">
+                        <div class="circle colorBlock5"></div>
+                        <span>Adobe </span><span class="online">(在线)</span>
+                    </div>
+                    <div class="friend_item">
+                        <div class="circle colorBlock6"></div>
+                        <span class="offline">Sun</span><span class="offline">(离线)</span>
+                    </div>
+                </div>
+
+                <div id="add">
+                    <span>Error---待开发</span>
+                </div>
+
+            </div>
+
+
+
+            <div class="rightPanel">
+                <h2>Let's explorer the world</h2>
+
+                <div id="pi_show">
+                    <img id ="pi_show_img" src="images/raspberry_pi.png"/>
+                </div>
+
+                <div class="dashboard">
+                    <div id="runtime_info">
+                        <div class="runtime_info_title">控制面板</div>
+                        <span id="serialNo">设备号：rasp_01</span><br/>
+                        <span id="status">运行状态：正常</span><br/>
+                        <span id="cpu">cpu：1GHZ</span><br/>
+                        <span id="memory">memory：2GB</span>
+                     </div>
+                     <div class="buttons_panel">
+                         <a href="ImageView.html" target="_blank" class="control_button">
+                            <span id="control_str">开始控制</span>
+                         </a>
+                         <a href="config.html" target="_blank" class="configuration_button">
+                            <span>配置管理</span>
+                         </a>
+                         <a class="delete_button">
+                            <span>删除设备</span>
+                         </a>
+                     </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+</html>

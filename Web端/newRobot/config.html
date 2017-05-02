@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="baseColorBack colorfulBack">
+
+<head>
+    <meta charset="UTF-8" content="width=device-width,user-scalable=yes" />
+    <title>配置管理</title>
+    <link rel="stylesheet" href="css/MainStyle.css" />
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery.json.js"></script>
+    <script src="js/config.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+            <div class="colorBlock redBack">
+                <a class="go_back" href="main.html"><img id="goBack" src="css/images/back.png"> </a><p>图像属性配置</p>
+            </div>
+    </div>
+    <div class="config-Page midleInformation">
+        
+        <div class="container">
+            <div class="confi" >
+                <form method="POST" id="config" action="main.html">
+                <div class="config-item">
+                    <label class="config-Page">图像亮度</label>
+                    <input id="brightness" type="range" step="1" min="0" max="100" value="50"></input>
+                    <input id="brightnessValue" type="number" step="1" min="0" max="100" value="50" ></input>
+                </div>
+                <div class="config-item">
+                    <label class="config-Page">图像对比度</label>
+                    <input id="contrast" type="range" step="1" min="0" max="100" value="50"></input>
+                    <input id="contrastValue" type="number" step="1" min="0" max="100" value="50"></input>
+                </div>
+                <div class="config-item">
+                    <label class="config-Page">图像饱和度</label>
+                    <input id="saturation" type="range" step="1" min="0" max="100" value="50"></input>
+                    <input id="saturationValue" type="number" step="1" min="0" max="100" value="50"></input>
+                </div>
+                
+                <div class="config-item">
+                    <label class="config-Page">图像宽度</label>
+                    <input id="width" type="range" step="40" min="160" max="1280" value="320" ></input>
+                    <input id="widthValue" type="number" step="40" min="160" max="1280"  value="320" ></input>
+                </div>
+                <div class="config-item">
+                    <label class="config-Page">图像长度</label>
+                    <input id="height" type="range" step="30" min="120" max="960" value="240" ></input>
+                    <input id="heightValue" type="number" step="30" min="120" max="960"  value="240" ></input>
+                </div>
+            <a id="submitButton" class="button">确认配置</a>
+        </form>
+            </div>
+            
+        </div>
+        
+
+        
+    </div>
+</body>
+
+</html>
