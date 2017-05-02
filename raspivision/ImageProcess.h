@@ -2,8 +2,8 @@
 //  ImageProcess.h
 //  dachuang_car_xcode
 //
-//  Created by 王晗 on 10/12/16.
-//  Copyright (C) 2016 . All rights reserved.
+//  Created by 黄正跃 on 10/12/16.
+//  Copyright © 2016 . All rights reserved.
 //
 
 

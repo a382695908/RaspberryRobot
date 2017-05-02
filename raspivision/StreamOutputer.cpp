@@ -3,7 +3,7 @@
 //  raspivision
 //
 //  Created by WangHan.SCU on 5/1/16.
-//  Copyright © 2016 SCU. All rights reserved.
+//  Copyright (C) 2016 SCU. All rights reserved.
 //
 
 #include "StreamOutputer.h"
