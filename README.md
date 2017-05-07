@@ -47,3 +47,7 @@ webControl基于jquery，`登陆界面`为login.html。初始登陆账号为`roo
 
 第3处：ImageView.js文件,路径为/webControl/js/ImageView.js
 ![ImageViewJs](./images/ImageViewJs.png)
+
+## 联系作者
+
+如果对该项目有兴趣或者想进一步探讨该项目，可以联系邮箱[wanghan0501@vip.qq.com](wanghan0501@vip.qq.com)
