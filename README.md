@@ -50,4 +50,4 @@ webControl基于jquery，`登陆界面`为login.html。初始登陆账号为`roo
 
 ## 联系作者
 
-如果对该项目有兴趣或者想进一步探讨该项目，可以联系邮箱[wanghan0501@vip.qq.com](mailto:wanghan0501@vip.qq.com)
+如果对该项目有兴趣或者想进一步探讨该项目，可以联系邮箱[hanwang.0501@gmail.com](mailto:hanwang.0501@gmail.com)
